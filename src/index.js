@@ -1,26 +1,23 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const path = require("path");
-const cors = require("cors");
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
-const server = require("http").Server(app);
-const io = require("socket.io")(server);
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 mongoose.connect(
-  "mongodb+srv://admin:admin@cluster0-nogya.mongodb.net/OmniStack7?retryWrites=true&w=majority",
+  'mongodb+srv://admin:admin@cluster0-nogya.mongodb.net/OmniStack7?retryWrites=true&w=majority',
   {
-    useNewUrlParser: true
-  }
+    useNewUrlParser: true,
+  },
 );
 
 app.use(cors());
 
-app.use(
-  "/files",
-  express.static(path.resolve(__dirname, "..", "uploads", "resized"))
-);
+app.use('/files', express.static(path.resolve(__dirname, '..', 'uploads', 'resized')));
 
 app.use((req, res, next) => {
   req.io = io;
@@ -28,6 +25,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(require("./routes"));
+app.use(require('./routes'));
 
 server.listen(3333);
